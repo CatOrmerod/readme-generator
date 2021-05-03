@@ -25,6 +25,7 @@ const questions = () => {
             type: 'input',
             name: 'install',
             message: 'Enter any installation instructions for your project',
+            default: 'npm i'
         },
         {
             type: 'input',
@@ -34,7 +35,7 @@ const questions = () => {
         {
             type: 'input',
             name: 'contributors',
-            message: 'Are there any other contributors to this project?',
+            message: 'Please outline any contribution guidelines to be followed:',
         },
         {
             type: 'input',
@@ -44,8 +45,22 @@ const questions = () => {
         {
             type: 'list',
             name: 'license',
-            message: 'which license?',
+            message: 'Which license would you like to apply to your project?',
             choices: ["mit", "gpl-3.0", "apache-2.0"],
+        },
+        {
+            type: 'input',
+            name: 'user',
+            message: 'What is your GitHub username?',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Please enter your email address:',
+            validate: function (email) {
+                if(email.includes('@')) {return true};
+                return 'Please enter a valid email address';
+            }
         },
     ]);
 };
