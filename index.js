@@ -5,7 +5,6 @@ const fs = require('fs');
 const util = require('util');
 const generateMarkdown = require('./src/generateMarkdown');
 
-
 const writeToFile = util.promisify(fs.writeFile);
 
 // TODO: Create an array of questions for user input
@@ -45,8 +44,8 @@ const questions = () => {
         {
             type: 'list',
             name: 'license',
-            message: 'Which license would you like to apply to your project?',
-            choices: ["mit", "gpl-3.0", "apache-2.0", "mpl-2.0", "bsd-2-clause", ""],
+            message: 'Which license would you like to apply to your project? (first option blank if no license required)',
+            choices: ["", "mit", "gpl-3.0", "apache-2.0", "mpl-2.0", "bsd-2-clause"],
         },
         {
             type: 'input',
@@ -64,6 +63,8 @@ const questions = () => {
         },
     ]);
 };
+
+//api query to return the license info should the answer not be empty
 function fetchLicense(license) {
     const queryUrl = `https://api.github.com/licenses/${license}`;
     return axios.get(queryUrl)
@@ -72,8 +73,7 @@ function fetchLicense(license) {
 // TODO: Create a function to initialize app
 const init = () => {
     questions()
-        // TODO: Create a function to write README file
-        // function writeToFile(fileName, data) {}
+        //function to bring through the license details
         .then(async function (answers) {
             console.log(answers);
             let licenseInfo ={}
@@ -87,14 +87,14 @@ const init = () => {
                 };
             }
             console.log(licenseInfo)
-            writeToFile('test.md', generateMarkdown({ ...answers, ...licenseInfo }))
-                .then(() => console.log('Successfully wrote test.md'))
+            // TODO: Create a function to write README file
+            // function writeToFile(fileName, data) {}
+            writeToFile('output/README.md', generateMarkdown({ ...answers, ...licenseInfo }))
+                .then(() => console.log('Successfully wrote README.md'))
                 .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
 };
 
-
 // Function call to initialize app
 init();
-

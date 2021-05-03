@@ -14,6 +14,7 @@ if (!licKey)
 return ""
 else 
 return `${licName} 
+
 For further information see ${licURL}`
 };
 
@@ -62,13 +63,14 @@ const generateMarkdown = ({ title, description, install, usage, contributors, te
 
   ## Questions? 
   Check out my GitHub profile: https://github.com/${user}
+
   Please contact me on ${email} if you'd like to discuss any aspects of this project.  
 
   ## License
   ${renderLicenseLink(licKey, licName, licURL)}
+
   ${renderLicenseSection(licKey, licBody)}
 
 `;
-
 
 module.exports = generateMarkdown;
