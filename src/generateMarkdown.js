@@ -27,7 +27,7 @@ return `${licBody}`
 };
 
 // TODO: Create a function to generate markdown for README
-const generateMarkdown = ({ title, description, install, usage, contributors, test, licKey, licName, licBody, licURL }) =>
+const generateMarkdown = ({ title, description, install, usage, contributors, test, user, email, licKey, licName, licBody, licURL }) =>
   `# ${title}
 
   ${renderLicenseBadge(licKey)}
@@ -36,6 +36,17 @@ const generateMarkdown = ({ title, description, install, usage, contributors, te
   ${description}
 
   ## Table of Contents
+  [Installation Instructions](#installation)
+
+  [Usage](#usage)
+
+  [Contributors](#contributors)
+
+  [Test](#test)
+
+  [Questions](#questions)
+
+  [Licence](#Licence)
 
   ## Installation
   ${install}
@@ -49,10 +60,13 @@ const generateMarkdown = ({ title, description, install, usage, contributors, te
   ## Test
   ${test}
 
+  ## Questions? 
+  Check out my GitHub profile: https://github.com/${user}
+  Please contact me on ${email} if you'd like to discuss any aspects of this project.  
+
   ## License
   ${renderLicenseLink(licKey, licName, licURL)}
   ${renderLicenseSection(licKey, licBody)}
-  
 
 `;
 
