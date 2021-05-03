@@ -46,7 +46,7 @@ const generateMarkdown = ({ title, description, install, usage, contributors, te
 
   [Questions](#questions)
 
-  [Licence](#Licence)
+  [License](#License)
 
   ## Installation
   ${install}

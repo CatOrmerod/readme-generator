@@ -19,18 +19,18 @@ const questions = () => {
         {
             type: 'input',
             name: 'description',
-            message: 'Enter a brief description of your project',
+            message: 'Enter a brief description of your project:',
         },
         {
             type: 'input',
             name: 'install',
-            message: 'Enter any installation instructions for your project',
+            message: 'Enter any installation instructions for your project:',
             default: 'npm i'
         },
         {
             type: 'input',
             name: 'usage',
-            message: 'Enter usage information for your project',
+            message: 'Enter usage information for your project:',
         },
         {
             type: 'input',
@@ -46,7 +46,7 @@ const questions = () => {
             type: 'list',
             name: 'license',
             message: 'Which license would you like to apply to your project?',
-            choices: ["mit", "gpl-3.0", "apache-2.0"],
+            choices: ["mit", "gpl-3.0", "apache-2.0", "mpl-2.0", "bsd-2-clause", ""],
         },
         {
             type: 'input',
@@ -58,34 +58,38 @@ const questions = () => {
             name: 'email',
             message: 'Please enter your email address:',
             validate: function (email) {
-                if(email.includes('@')) {return true};
+                if (email.includes('@')) { return true };
                 return 'Please enter a valid email address';
             }
         },
     ]);
 };
+function fetchLicense(license) {
+    const queryUrl = `https://api.github.com/licenses/${license}`;
+    return axios.get(queryUrl)
+}
 
 // TODO: Create a function to initialize app
 const init = () => {
     questions()
         // TODO: Create a function to write README file
         // function writeToFile(fileName, data) {}
-        .then(function (answers) {
-            const queryUrl = `https://api.github.com/licenses/${answers.license}`;
+        .then(async function (answers) {
             console.log(answers);
-            axios.get(queryUrl).then(function (res) {
-                
-                const licenseInfo = {
+            let licenseInfo ={}
+            if (answers.license) { 
+                const res = await Promise.resolve (fetchLicense(answers.license))
+                licenseInfo = {
                     licKey: res.data.key,
                     licName: res.data.name,
                     licURL: res.data.html_url,
                     licBody: res.data.body,
                 };
-                writeToFile('test.md', generateMarkdown({...answers, ...licenseInfo}))
-                    .then(() => console.log('Successfully wrote test.md'))
-                    .catch((err) => console.error(err));
-            })
-            .catch((err) => console.error(err));
+            }
+            console.log(licenseInfo)
+            writeToFile('test.md', generateMarkdown({ ...answers, ...licenseInfo }))
+                .then(() => console.log('Successfully wrote test.md'))
+                .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
 };
@@ -93,3 +97,4 @@ const init = () => {
 
 // Function call to initialize app
 init();
+
