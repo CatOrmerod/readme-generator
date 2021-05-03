@@ -20,8 +20,8 @@ Basic code was provided and we were required to build on that platform to create
 
 ## Installation Instructions
 
-Step 1 - Before doing anything please write 'npm i' in the terminal
-Step 2 - Now select the index file and right click to open in integrated terminal
+Step 1 - Select the index file and right click to open in integrated terminal
+Step 2 - Now please write 'npm i' in the terminal to download the required packages
 Step 3 - In terminal enter "node index.js" to begin the inquirer programme prompts
 Step 4 - Enter the required information
 Step 5 - Once completed you will see a message "Successfully wrote README.md", open this file with a right click to see preview
